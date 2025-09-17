@@ -185,7 +185,12 @@ class ScenicRunner:
         ## currently there is only one scene in this list ##
         for scene in scenes:
             if self.scenic.setSimulation(scene):
-                self.scenic.update_behavior = self.scenic.runSimulation()
+                try:
+                    self.scenic.update_behavior = self.scenic.runSimulation()
+                except Exception as e:
+                    self.logger.log(f'Error in Scenic simulation: {e}', color='red')
+                    self.scenic.destroy()
+                    raise e
                 next(self.scenic.update_behavior)
         
     def train(self, data_loader, start_episode=0, replay_buffer = None):

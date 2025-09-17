@@ -51,9 +51,15 @@ class ScenicScenario():
         for other_actor in self.world.scenic.simulation.objects:
             if 'Adv' in str(other_actor.behavior):
                 adv_actor = other_actor.carlaActor
-                self.adv_actors.append(adv_actor)
-                CarlaDataProvider._carla_actor_pool[actor.id] = adv_actor
-                CarlaDataProvider.register_actor(adv_actor)      
+                print (adv_actor)
+                print ("\n")
+        for other_actor in self.world.scenic.simulation.objects:
+            if 'Adv' in str(other_actor.behavior):
+                adv_actor = other_actor.carlaActor
+                if adv_actor not in self.adv_actors:
+                    self.adv_actors.append(adv_actor)
+                    CarlaDataProvider._carla_actor_pool[actor.id] = adv_actor
+                    CarlaDataProvider.register_actor(adv_actor)      
         
         if len(self.config.trajectory) == 0:
             # coarse traj ##
